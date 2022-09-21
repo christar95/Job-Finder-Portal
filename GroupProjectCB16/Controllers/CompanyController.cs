@@ -22,9 +22,10 @@ namespace GroupProjectCB16.Controllers
             if (ModelState.IsValid)
             {
                 UnitOfWork.Companies.Insert(company);
+                return Redirect("/Home/Index");
             }
 
-            return RedirectToAction("Index");
+            return View();
         }
 
         [HttpGet]

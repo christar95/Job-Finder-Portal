@@ -74,7 +74,7 @@ namespace GroupProjectCB16.Controllers
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest); 
             }
             var AdForUpdate = UnitOfWork.Jobs.GetById(id);
-            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "Name", AdForUpdate.CompanyId);
+            
             if (AdForUpdate is null) 
             { 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound); 
