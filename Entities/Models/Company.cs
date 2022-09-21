@@ -13,6 +13,10 @@ namespace Entities.Models
         public string Email { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-
+        public ICollection<Job> Jobs { get; set; }
+        public Company()
+        {
+            Jobs = new HashSet<Job>();
+        }
     }
 }

@@ -72,13 +72,14 @@ namespace GroupProjectCB16.Controllers
         return RedirectToAction("Index");
         }
 
+        
         public ActionResult Delete(int? id) 
         { 
             if (id is null)
             { 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest); 
             } 
-            var AdForDelete = UnitOfWork.Companies.GetById(id); 
+            var AdForDelete = UnitOfWork.Jobs.GetById(id); 
             if (AdForDelete is null) 
             { 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound); 
@@ -86,10 +87,18 @@ namespace GroupProjectCB16.Controllers
             return View(AdForDelete); 
         }
 
-        [HttpDelete]
-        public ActionResult DeleteConfirmed(Job jobDeleted)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int? id)
         {
-        if (ModelState.IsValid) { UnitOfWork.Jobs.Delete(jobDeleted); }
+            var job = UnitOfWork.Jobs.GetById(id);
+            if (job is null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            
+            UnitOfWork.Jobs.Delete(job);
+            
 
         return RedirectToAction("Index");
         }
