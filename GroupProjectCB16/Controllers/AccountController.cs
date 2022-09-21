@@ -153,7 +153,7 @@ namespace GroupProjectCB16.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
                     FirstName = model.FirstName, LastName = model.LastName, Address = model.Address, 
-                    Age = model.Age, Gender=model.Gender, PhoneNumber = model.Phone
+                    DateOfBirth = model.DateOfBirth, Gender=model.Gender, PhoneNumber = model.Phone
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
