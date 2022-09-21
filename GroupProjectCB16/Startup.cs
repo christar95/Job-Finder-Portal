@@ -31,11 +31,11 @@ namespace GroupProjectCB16
             //Registering controllers(without this the controllers will NOT run, so do not remove this)
             services.AddControllersAsServices(typeof(Startup).Assembly.GetExportedTypes()
                        .Where(t => !t.IsAbstract && !t.IsGenericTypeDefinition)
-                       .Where(t => typeof(Controller).IsAssignableFrom(t)
+                       .Where(t => typeof(IController).IsAssignableFrom(t)
                             || t.Name.EndsWith("Controller", StringComparison.OrdinalIgnoreCase)));
 
             //Registering the rest of the services.
-            services.AddScoped<IJobService, JobService>();
+            services.AddTransient<IJobService, JobService>();
         }
 
     }

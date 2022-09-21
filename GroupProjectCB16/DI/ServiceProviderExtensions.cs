@@ -13,7 +13,7 @@ namespace GroupProjectCB16.DI
         {
             foreach (var type in controllerTypes)
             {
-                services.AddScoped(type);
+                services.AddTransient(type);
             }
 
             return services;

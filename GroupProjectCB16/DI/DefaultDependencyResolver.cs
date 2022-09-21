@@ -4,21 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http.Dependencies;
+using System.Web.Mvc;
 
 namespace GroupProjectCB16.DI
 {
-    public class DefaultDependencyResolver : IDependencyResolver
+    public class DefaultDependencyResolver : System.Web.Mvc.IDependencyResolver
     {
         protected IServiceProvider serviceProvider;
 
         public DefaultDependencyResolver(IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
-        }
-
-        public IDependencyScope BeginScope()
-        {
-            return new DefaultDependencyResolver(this.serviceProvider);
         }
 
         public object GetService(Type serviceType)
@@ -31,9 +27,6 @@ namespace GroupProjectCB16.DI
             return this.serviceProvider.GetServices(serviceType);
         }
 
-        public void Dispose()
-        {
-
-        }
+       
     }
 }
