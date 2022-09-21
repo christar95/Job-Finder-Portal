@@ -19,7 +19,7 @@ namespace Entities.Models
         public DateTime DatePosted { get; set; }
         public decimal? Salary { get; set; }
 
-        //Navigation Properties
+        // Navigation Properties
         public int CompanyId { get; set; }
         public Company Company { get; set; }
         public ICollection<JobSeeker> JobSeekers { get; set; }
