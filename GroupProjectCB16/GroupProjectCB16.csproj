@@ -277,10 +277,10 @@
     <Content Include="Views\Shared\Components\_JsLibraries.cshtml" />
     <Content Include="Views\Shared\Components\_PreLoader.cshtml" />
     <Content Include="Views\Shared\Components\_Footer.cshtml" />
+    <Content Include="Views\Job\DeleteConfirmed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Job\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

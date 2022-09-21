@@ -14,5 +14,13 @@ namespace Entities.Models
         public string Address { get; set; }
         public string Phone { get; set; }
 
+        //Navigation Properties
+        public ICollection<Job> AvailableJobs { get; set; }
+
+        public Company()
+        {
+            AvailableJobs = new HashSet<Job>();
+        }
+
     }
 }

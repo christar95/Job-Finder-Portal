@@ -151,7 +151,11 @@ namespace GroupProjectCB16.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
+                    FirstName = model.FirstName, LastName = model.LastName, Address = model.Address, 
+                    Age = model.Age, Gender=model.Gender, PhoneNumber = model.Phone
+                };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

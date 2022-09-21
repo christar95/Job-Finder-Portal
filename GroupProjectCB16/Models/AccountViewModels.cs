@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Entities.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace GroupProjectCB16.Models
@@ -64,6 +65,18 @@ namespace GroupProjectCB16.Models
 
     public class RegisterViewModel
     {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public int Age { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Address { get; set; }
+
+        public Gender Gender { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
