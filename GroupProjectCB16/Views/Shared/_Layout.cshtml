@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    @Html.Partial("~/Views/Shared/Components/_MetaHeader.cshtml")
+
+</head>
+<body>
+
+    <!-- Preloader -->
+    @Html.Partial("~/Views/Shared/Components/_Preloader.cshtml")
+
+    <!-- Header Start -->
+    @Html.Partial("~/Views/Shared/Components/_Header.cshtml")
+    <!-- Header End -->
+
+    <main>
+        @RenderBody()
+    </main>
+
+
+
+
+    <!-- Footer Start-->
+    @Html.Partial("~/Views/Shared/Components/_Footer.cshtml")
+    <!-- Footer End-->
+    <!-- JS here -->
+    @Html.Partial("~/Views/Shared/Components/_JsLibraries.cshtml")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
