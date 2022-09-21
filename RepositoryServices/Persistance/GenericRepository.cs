@@ -21,7 +21,7 @@ namespace RepositoryServices.Persistance
 
         public void Delete(object id)
         {
-            var existingModel = GetById(id);
+            var existingModel = model.Find(id);
             db.Entry(existingModel).State = EntityState.Deleted;
             Save();
 

@@ -19,15 +19,14 @@ namespace Entities.Models
         public DateTime DatePosted { get; set; }
         public decimal? Salary { get; set; }
 
-        // Navigation Properties
-        public int CompanyId { get; set; }
+        //Navigation Properties
         public Company Company { get; set; }
-        public ICollection<JobSeeker> JobSeekers { get; set; }
+        
 
         //Constructor
         public Job()
         {
-            JobSeekers = new HashSet<JobSeeker>();
+
         }
 
     }

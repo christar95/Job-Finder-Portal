@@ -9,6 +9,6 @@ namespace RepositoryServices.Core.Repositories
 {
     public interface IJobRepository : IGenericRepository<Job>
     {
-        
+       // IEnumerable<Job> GetJobsFromAllCompanies();
     }
 }

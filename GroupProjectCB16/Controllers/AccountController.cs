@@ -155,7 +155,7 @@ namespace GroupProjectCB16.Controllers
                     FirstName = model.FirstName, LastName = model.LastName, Address = model.Address, 
                     DateOfBirth = model.DateOfBirth, Gender=model.Gender, PhoneNumber = model.Phone
                 };
-
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
