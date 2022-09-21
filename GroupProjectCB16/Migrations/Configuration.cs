@@ -1,5 +1,7 @@
 ﻿namespace GroupProjectCB16.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -18,6 +20,28 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
+            if (!context.Roles.Any(x => x.Name == "Admin"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole() { Name = "Admin" };
+                manager.Create(role);
+            }
+            if (!context.Roles.Any(x => x.Name == "User"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole() { Name = "User" };
+                manager.Create(role);
+            }
+            if(!context.Roles.Any(x => x.Name == "Company"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole() { Name = "Company" };
+                manager.Create(role);
+            }
+            
         }
     }
 }

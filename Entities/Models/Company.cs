@@ -15,11 +15,12 @@ namespace Entities.Models
         public string Phone { get; set; }
 
         //Navigation Properties
-        public ICollection<Job> AvailableJobs { get; set; }
+        //public int JobId { get; set; }
+        //public Job AvailableJob { get; set; }
 
         public Company()
         {
-            AvailableJobs = new HashSet<Job>();
+            
         }
 
     }

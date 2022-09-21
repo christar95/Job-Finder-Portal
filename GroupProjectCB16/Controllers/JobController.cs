@@ -47,7 +47,7 @@ namespace GroupProjectCB16.Controllers
         {            
             var companyJobs = UnitOfWork.Jobs.GetAll().ToList();
 
-            return View(companyJobs);
+            return Json(companyJobs,JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult UpdateAd(int? id) 
@@ -73,7 +73,7 @@ namespace GroupProjectCB16.Controllers
         }
 
         
-        public ActionResult Delete(int? id) 
+        /*public ActionResult Delete(int? id) 
         { 
             if (id is null)
             { 
@@ -85,22 +85,30 @@ namespace GroupProjectCB16.Controllers
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound); 
             } 
             return View(AdForDelete); 
-        }
+        }*/
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? id)
+        /*[HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]*/
+        [HttpDelete]
+        public ActionResult Delete(int? id)
         {
-            var job = UnitOfWork.Jobs.GetById(id);
-            if (job is null)
+            /*if (id is null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            
-            UnitOfWork.Jobs.Delete(job);
-            
+            var AdForDelete = UnitOfWork.Jobs.GetById(id);
+            if (AdForDelete is null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
+            }*/
 
-        return RedirectToAction("Index");
+
+            if (ModelState.IsValid)
+            {
+                UnitOfWork.Jobs.Delete(id);
+            }
+            
+            return RedirectToAction("Index");
         }
     }
     

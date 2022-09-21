@@ -73,8 +73,15 @@ namespace GroupProjectCB16.Controllers
         {
             var listOfCompanies = UnitOfWork.Companies.GetAll().ToList();
 
-            return View(listOfCompanies);
+            return Json(listOfCompanies,JsonRequestBehavior.AllowGet);
         }
+        //public ActionResult Delete(int? id)
+        //{
+            
+        //    return View(company);
+        //}
+
+        [HttpDelete]
         public ActionResult Delete(int? id)
         {
             if (id is null)
@@ -86,12 +93,6 @@ namespace GroupProjectCB16.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
             }
-            return View(company);
-        }
-
-        [HttpDelete]
-        public ActionResult Delete(Company company)
-        {
             if (ModelState.IsValid)
             {
                 UnitOfWork.Companies.Delete(company);
