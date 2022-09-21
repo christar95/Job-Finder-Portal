@@ -16,6 +16,5 @@ namespace RepositoryServices.Persistance.Repositories
 
         }
 
-       
     }
 }

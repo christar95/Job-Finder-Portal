@@ -9,5 +9,6 @@ namespace RepositoryServices.Core.Repositories
 {
     public interface IJobRepository : IGenericRepository<Job>
     {
+        
     }
 }

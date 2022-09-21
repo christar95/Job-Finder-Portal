@@ -14,8 +14,9 @@
             <!-- Count of Job list Start -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="count-job mb-35">
+                    <div>
                         <span>@Model.Count() Jobs Found</span>
+                        @Html.ActionLink("Create","CreateJobAd",null,new {@class="btn head-btn2"})
                     </div>
                 </div>
             </div>
@@ -23,23 +24,22 @@
             <!-- single-job-content -->
             @foreach (var item in Model)
             {
-
                 <div class="single-job-items mb-30">
                     <div class="job-items">
                         <div class="job-tittle job-tittle2">
-                            @*@Html.ActionLink(item.Title, "Details", new { id = item.Id }, new { @class = "text-dark" })*@
+                            @Html.ActionLink(item.Title, "UpdateAd", new { id = item.Id }, new { @class = "text-dark" })
                             <ul>
-                                <li>@item.Title</li>
-                                @*<li>@item.Company.Name</li>*@
+                                <li><a href="/UpdateAd?id=@item.Id" @item.Title /></li>
+                                <li>@item.Company.Name</li>
                                 <li><i class="fas fa-map-marker-alt"></i>@item.WorkPlace</li>
                                 <li>@item.Salary €/Month</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="items-link items-link2 f-right">
-                        <a href="">@item.EmploymentType</a>
-                        <span>Posted on @item.DatePosted.Date.ToShortDateString() </span>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id },new {@class="btn btn-danger"})
+                    <div class="items-link2 ">
+                        <p>@item.EmploymentType</p>
+                        <p>Posted on @item.DatePosted.Date.ToShortDateString() </p>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
                     </div>
 
                 </div>

@@ -22,12 +22,14 @@ namespace GroupProjectCB16.Controllers
         { 
             if (ModelState.IsValid) 
             { 
-                UnitOfWork.Jobs.Insert(job); 
+                UnitOfWork.Jobs.Insert(job);
+                return Redirect("/Home/Index");
             } 
             return View(); 
         }
 
-        [HttpGet] public ActionResult ReadAd(int? id) 
+        [HttpGet] 
+        public ActionResult ReadAd(int? id) 
         { 
             if (id is null) 
             { 
@@ -46,8 +48,23 @@ namespace GroupProjectCB16.Controllers
         public ActionResult GetAllJobAds()        
         {            
             var companyJobs = UnitOfWork.Jobs.GetAll().ToList();
-
+            GetCompanies();
             return View(companyJobs);
+        }
+
+        [HttpGet]
+        public ActionResult AdDetails(int? id)
+        {
+            if (id is null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            var job = UnitOfWork.Jobs.GetById(id);
+            if (job is null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
+            }
+            return View(job);
         }
 
         public ActionResult UpdateAd(int? id) 
@@ -55,8 +72,9 @@ namespace GroupProjectCB16.Controllers
             if (id is null) 
             { 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest); 
-            } 
-            var AdForUpdate = UnitOfWork.Companies.GetById(id); 
+            }
+            var AdForUpdate = UnitOfWork.Jobs.GetById(id);
+            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "Name", AdForUpdate.CompanyId);
             if (AdForUpdate is null) 
             { 
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound); 
@@ -102,6 +120,14 @@ namespace GroupProjectCB16.Controllers
 
         return RedirectToAction("Index");
         }
+
+        [NonAction]
+        public void GetCompanies()
+        {
+            var companies = UnitOfWork.Companies.GetAll();
+            ViewBag.companies = companies;
+        }
+
     }
     
 }

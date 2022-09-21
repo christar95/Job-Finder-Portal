@@ -11,6 +11,22 @@
         @Html.AntiForgeryToken()
         <h4>Create a new account.</h4>
         <hr />
+        <div class="mt-10">
+            @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "single-input" })
+            </div>
+        </div>
+        <div class="mt-10">
+            @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.LastName, new { @class = "single-input" })
+            </div>
+        </div>
+        <div class="mt-10">
+            @Html.LabelFor(m=>m.DateOfBirth,new {@class="control-label" })
+            <input type="date" name="DateOfBirth"  class="single-input"/>
+        </div>
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="mt-10">
             @Html.LabelFor(m => m.Email, new { @class = "control-label" })
@@ -30,7 +46,7 @@
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "single-input" })
             </div>
         </div>
-       
+
         <div class="button-group-area mt-40">
             <input class="genric-btn primary circle" type="submit" value="Register" />
             <input class="genric-btn success circle" type="reset" value="Clear" />

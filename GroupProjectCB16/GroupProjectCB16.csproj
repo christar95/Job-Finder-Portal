@@ -475,6 +475,9 @@
     <Content Include="Views\Shared\Components\_Footer.cshtml" />
     <Content Include="Views\Job\GetAllJobAds.cshtml" />
     <Content Include="Views\Job\Delete.cshtml" />
+    <Content Include="Views\Job\CreateJobAd.cshtml" />
+    <Content Include="Views\Company\CompanyRegister.cshtml" />
+    <Content Include="Views\Job\UpdateAd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
