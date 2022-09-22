@@ -1,4 +1,5 @@
 ﻿using Entities.Enums;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -66,17 +67,20 @@ namespace GroupProjectCB16.Models
 
     public class RegisterViewModel
     {
-        public string FirstName { get; set; }
+        
+        public string Role { get; set; }
+        public string Name { get; set; }
 
-        public string LastName { get; set; }
+        public string Surname { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public string Phone { get; set; }
 
         public string Address { get; set; }
 
         public Gender Gender { get; set; }
+        
 
         [Required]
         [EmailAddress]

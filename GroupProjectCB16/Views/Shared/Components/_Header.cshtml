@@ -19,18 +19,36 @@
                             <!-- Main-menu -->
                             @if (Request.IsAuthenticated)
                             {
-                                
-                                <div class="main-menu">
-                                    <nav class="d-none d-lg-block">
-                                        <ul id="navigation">
-                                            <li>@Html.ActionLink( "My Profile",  "Index") </li>
-                                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                                            <li>@Html.ActionLink("Find a Job", "GetAllJobs", "Job")</li>
-                                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                                        </ul>
-                                    </nav>
-                                </div>
+                                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                                var currentUser = manager.FindById(User.Identity.GetUserId());
+                                if (User.IsInRole("Company"))
+                                {
+                                    <div class="main-menu">
+                                        <nav class="d-none d-lg-block">
+                                            <ul id="navigation">
+                                                <li>@Html.ActionLink("My Profile", "DetailsOf","Company") </li>
+                                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                                <li>@Html.ActionLink("Find a Job", "GetAllJobs", "Job")</li>
+                                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                }
+                                else if (User.IsInRole("User"))
+                                {
+                                    <div class="main-menu">
+                                        <nav class="d-none d-lg-block">
+                                            <ul id="navigation">
+                                                <li>@Html.ActionLink("My Profile", "Index") </li>
+                                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                                <li>@Html.ActionLink("Find a Job", "GetAllJobs", "Job")</li>
+                                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                }
                                 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                 {
                                     @Html.AntiForgeryToken()
@@ -48,7 +66,6 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li>@Html.ActionLink("My Profile", "Index") </li>
                                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                                             <li>@Html.ActionLink("Find a Job", "GetAllJobAds", "Job")</li>
                                             <li>@Html.ActionLink("About", "About", "Home")</li>

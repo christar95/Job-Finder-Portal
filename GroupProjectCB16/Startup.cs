@@ -1,6 +1,9 @@
 ﻿using GroupProjectCB16.DI;
 using GroupProjectCB16.Infrastracture.Interfaces;
 using GroupProjectCB16.Infrastracture.Services;
+using GroupProjectCB16.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Owin;
 using Owin;
@@ -19,7 +22,7 @@ namespace GroupProjectCB16
             ConfigureAuth(app);
             var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
             ConfigureServices(services);
-
+            CreateRolesAndUsers();
 
             //This is a default dependency resolver to resolve/get registered services
             var resolver = new DefaultDependencyResolver(services.BuildServiceProvider());
@@ -36,6 +39,31 @@ namespace GroupProjectCB16
 
             //Registering the rest of the services.
             services.AddTransient<IJobService, JobService>();
+        }
+
+        private void CreateRolesAndUsers()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            if (!roleManager.RoleExists("User"))
+            {
+                var role = new IdentityRole();
+                role.Name = "User";
+                roleManager.Create(role);
+            }
+            if (!roleManager.RoleExists("Company"))
+            {
+                var role = new IdentityRole();
+                role.Name = "Company";
+                roleManager.Create(role);
+            }
+            if (!roleManager.RoleExists("Admin"))
+            {
+                var role = new IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+            }
         }
 
     }

@@ -7,7 +7,7 @@
 
 <div class="col-lg-8 col-md-8 mb-10">
     <h3 class="mb-30">@ViewBag.Title</h3>
-    <form action="#">
+    <form method="post">
         <div class="mt-10">
             <input type="text" name="Title" placeholder="Title"
                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'" required
@@ -27,26 +27,28 @@
                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Salary'" required
                    class="single-input-primary">
         </div>
-        <div class="input-group-icon mt-10">
-            <div class="icon"><i class="fa fa-thumb-tack" aria-hidden="true"></i></div>
+        <div class="mt-10">
+            
             <input type="text" name="Region" placeholder="Region" onfocus="this.placeholder = ''"
                    onblur="this.placeholder = 'Region'" required class="single-input">
         </div>
-        <div class="input-group-icon mt-10">
-            <div class="icon"><i class="" aria-hidden="true"></i></div>
+        <div class="mt-10">
+            
             <div class="form-select">
                 @Html.EnumDropDownListFor(m => m.EmploymentType, new { @class = "single-input" })
             </div>
         </div>
-        <div class="input-group-icon mt-10">
-            <div class="icon"><i class="" aria-hidden="true"></i></div>
+        <div class="mt-10">
+            
             <div class="form-select">
 
                 @Html.EnumDropDownListFor(m => m.WorkPlace, new { @class = "single-input" })
 
             </div>
         </div>
-
+        <div class="mt-10">
+            <input type="hidden" name="DatePosted" value="@DateTime.Now" />
+        </div>
         <div class="mt-10">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

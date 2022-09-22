@@ -11,7 +11,8 @@ namespace GroupProjectCB16.Controllers
     public class JobController : BaseController
     {        // GET: Job        public ActionResult Index()        {            return View();        }
 
-        //Company creates Ad         
+        //Company creates Ad
+        [Authorize(Roles ="Company")]        
         public ActionResult CreateJobAd()        
         {            
             return View();        
@@ -25,7 +26,7 @@ namespace GroupProjectCB16.Controllers
                 UnitOfWork.Jobs.Insert(job);
                 return Redirect("/Home/Index");
             } 
-            return View(); 
+            return View(job); 
         }
 
         [HttpGet] 
@@ -48,8 +49,8 @@ namespace GroupProjectCB16.Controllers
         public ActionResult GetAllJobAds()        
         {            
             var companyJobs = UnitOfWork.Jobs.GetAll().ToList();
-
-            return Json(companyJobs,JsonRequestBehavior.AllowGet);
+            GetCompanies();
+            return View(companyJobs);
         }
 
         [HttpGet]
@@ -64,9 +65,11 @@ namespace GroupProjectCB16.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
             }
+            GetCompanies();
             return View(job);
         }
 
+        [HttpGet]
         public ActionResult UpdateAd(int? id) 
         { 
             if (id is null) 
@@ -82,12 +85,13 @@ namespace GroupProjectCB16.Controllers
             return View(AdForUpdate); 
         }
 
-        [HttpPut]
-        public ActionResult UpdateAdConfirmed(Job jobUpdated)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateAd(Job jobUpdated)
         {
-        if (ModelState.IsValid) { UnitOfWork.Jobs.Insert(jobUpdated); }
+        if (ModelState.IsValid) { UnitOfWork.Jobs.Update(jobUpdated); return RedirectToAction("GetAllJobAds"); }
 
-        return RedirectToAction("Index");
+            return View(jobUpdated);
         }
 
         
@@ -107,7 +111,7 @@ namespace GroupProjectCB16.Controllers
 
         /*[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]*/
-        [HttpDelete]
+        [HttpPost]
         public ActionResult Delete(int? id)
         {
             /*if (id is null)
@@ -124,9 +128,10 @@ namespace GroupProjectCB16.Controllers
             if (ModelState.IsValid)
             {
                 UnitOfWork.Jobs.Delete(id);
+                return RedirectToAction("GetAllJobAds");
             }
             
-            return RedirectToAction("Index");
+            return RedirectToAction("GetAllJobAds");
         }
 
         [NonAction]

@@ -8,25 +8,11 @@ using System.Web.Mvc;
 
 namespace GroupProjectCB16.Controllers
 {
+    [Authorize(Roles = "Company")]
     public class CompanyController : BaseController
     {
         // GET: Job
-        public ActionResult CompanyRegister()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult CompanyRegister(Company company)
-        {
-            if (ModelState.IsValid)
-            {
-                UnitOfWork.Companies.Insert(company);
-                return Redirect("/Home/Index");
-            }
-
-            return View();
-        }
+       
 
         [HttpGet]
         public ActionResult DetailsOf(int? id)
@@ -64,9 +50,10 @@ namespace GroupProjectCB16.Controllers
             if (ModelState.IsValid)
             {
                 UnitOfWork.Companies.Update(company);
+                return Redirect("/Home/Index");
             }
 
-            return RedirectToAction("Index");
+            return View(company);
         }
 
         //Methods For Admin

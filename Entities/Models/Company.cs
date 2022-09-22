@@ -13,7 +13,7 @@ namespace Entities.Models
         public string Email { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-
+        public DateTime DateFounded { get; set; }
         //Navigation Properties
         //public int JobId { get; set; }
         //public Job AvailableJob { get; set; }

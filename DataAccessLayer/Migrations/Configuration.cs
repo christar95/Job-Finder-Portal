@@ -35,6 +35,7 @@
                 Email = "infoath@epsilonnet.gr",
                 Address = " 350, Siggrou Avenue, ZIP 176 74 Kalithea",
                 Phone = "211 5007000",
+                DateFounded=new DateTime(2020,05,03)
             };
             Company c2 = new Company()
             {
@@ -42,6 +43,7 @@
                 Email = "karieraSolution@kariera.gr",
                 Address = "Kastorias 4, Gerakas 153 44",
                 Phone = "21 0811 5300",
+                DateFounded = new DateTime(2020, 05, 03)
             };
             Company c3 = new Company()
             {
@@ -49,6 +51,7 @@
                 Email = "sales@papadeas-sa.gr",
                 Address = "HROON 1912 4-6 ACHARNAI 136 71 ATHENS GR",
                 Phone = "6942474791",
+                DateFounded = new DateTime(2020, 05, 03)
             };
             Company c4 = new Company()
             {
@@ -56,6 +59,7 @@
                 Email = "contact@greeceinvestorguide.com",
                 Address = "Γράμμου 73, Άγιοι Ανάργυροι (Μαρούσι Αττικής), 151 24 Μαρούσι Αττικής",
                 Phone = "2106146174",
+                DateFounded = new DateTime(2020, 05, 03)
             };
             Company c5 = new Company()
             {
@@ -63,6 +67,7 @@
                 Email = "he@kotsovolos.gr",
                 Address = "Μαρίνου Αντύπα 90 T.K.: 14121 Ν.Ηράκλειο Αττικής",
                 Phone = "2102899999",
+                DateFounded = new DateTime(2020, 05, 03)
             };
             Company c6 = new Company()
             {
@@ -70,6 +75,7 @@
                 Email = "info@watt-volt.gr",
                 Address = "Λεωφόρος Κηφισίας 217Α. Μαρούσι 15124",
                 Phone = "18383, 281 022 1404",
+                DateFounded = new DateTime(2020, 05, 03)
             };
             Company c7 = new Company()
             {
@@ -77,6 +83,7 @@
                 Email = "info@hemmersbach.com",
                 Address = "Vasilisis Sofias 39, Athens",
                 Phone = "210527980",
+                DateFounded = new DateTime(2020, 05, 03)
             };
             context.Companies.AddOrUpdate(x => x.Name, c1, c2, c3, c4, c4, c5, c6, c7);
             context.SaveChanges();

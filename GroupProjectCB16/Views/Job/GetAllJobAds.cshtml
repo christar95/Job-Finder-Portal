@@ -29,7 +29,7 @@
                         <div class="job-tittle job-tittle2">
                             @Html.ActionLink(item.Title, "UpdateAd", new { id = item.Id }, new { @class = "text-dark" })
                             <ul>
-                                <li><a href="/UpdateAd?id=@item.Id" @item.Title /></li>
+                                @*<li><a href="/UpdateAd?id=@item.Id" @item.Title /></li>*@
                                 <li>@item.Company.Name</li>
                                 <li><i class="fas fa-map-marker-alt"></i>@item.WorkPlace</li>
                                 <li>@item.Salary €/Month</li>
@@ -39,7 +39,11 @@
                     <div class="items-link2 ">
                         <p>@item.EmploymentType</p>
                         <p>Posted on @item.DatePosted.Date.ToShortDateString() </p>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        <form action="/Job/Delete" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="submit" class="btn btn-danger" value="Delete" />
+                        </form>
                     </div>
 
                 </div>

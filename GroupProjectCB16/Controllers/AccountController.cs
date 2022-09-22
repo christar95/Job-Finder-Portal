@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GroupProjectCB16.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using DataAccessLayer;
+using Entities.Models;
 
 namespace GroupProjectCB16.Controllers
 {
@@ -17,7 +20,7 @@ namespace GroupProjectCB16.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext context = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -152,13 +155,27 @@ namespace GroupProjectCB16.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
-                    FirstName = model.FirstName, LastName = model.LastName, Address = model.Address, 
-                    DateOfBirth = model.DateOfBirth, Gender=model.Gender, PhoneNumber = model.Phone
+                    Name = model.Name, Surname = model.Surname, Address = model.Address, 
+                    BirthDate = model.BirthDate, Gender=model.Gender, PhoneNumber = model.Phone 
                 };
-                
+
                 var result = await UserManager.CreateAsync(user, model.Password);
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                userManager.AddToRole(user.Id, model.Role);
+                if (model.Role=="Company")
+                {
+                    ApplicationContext db = new ApplicationContext();
+                    Company company = new Company() { Name = model.Name, Address = model.Address, Email = model.Email, Phone = model.Phone, DateFounded = model.BirthDate };
+                    db.Companies.Add(company);
+                    db.SaveChanges();
+                }
                 if (result.Succeeded)
                 {
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -169,6 +186,7 @@ namespace GroupProjectCB16.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+                
                 AddErrors(result);
             }
 

@@ -5,27 +5,44 @@
 
 <h2 class="text-center">@ViewBag.Title</h2>
 
+
+
+
 <div class="col-lg-8 col-md-8 align-items-center container mb-10 mt-10">
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
         <h4>Create a new account.</h4>
         <hr />
+        <span>Register as :</span>
         <div class="mt-10">
-            @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+            <select name="Role" required>
+                <option value="User">User</option>
+                <option value="Company">Company</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+        <div class="mt-10">
+            @Html.LabelFor(m => m.Name, new { @class = "control-label" })
             <div>
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "single-input" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "single-input" })
             </div>
         </div>
         <div class="mt-10">
-            @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+            @Html.LabelFor(m => m.Surname, new { @class = "control-label" })
             <div>
-                @Html.TextBoxFor(m => m.LastName, new { @class = "single-input" })
+                @Html.TextBoxFor(m => m.Surname, new { @class = "single-input" })
             </div>
         </div>
         <div class="mt-10">
-            @Html.LabelFor(m=>m.DateOfBirth,new {@class="control-label" })
-            <input type="date" name="DateOfBirth"  class="single-input"/>
+            @Html.LabelFor(m => m.BirthDate, new { @class = "control-label" })
+            <input type="date" name="BirthDate" class="single-input" />
+        </div>
+        <div class="mt-10">
+            <label class="control-label" for="Name">Address</label>
+            <div>
+                @Html.TextBoxFor(m => m.Address, new { @class = "single-input" })
+            </div>
         </div>
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="mt-10">
@@ -53,7 +70,72 @@
         </div>
     }
 </div>
+@*<div class="col-lg-8 col-md-8 align-items-center container mb-10 mt-10" id="companyForm" hidden>
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <hr />
+
+        <div class="mt-10">
+            <label class="control-label" for="Name">Company Name</label>
+            <div>
+                @Html.TextBoxFor(m => m.Name, new { @class = "single-input" })
+            </div>
+        </div>
+        <div class="mt-10">
+            <label for="BirthDate" class="control-label">Date Founded</label>
+            <input type="date" name="BirthDate" class="single-input" />
+        </div>
+        <div class="mt-10">
+            <label class="control-label" for="Name">Address</label>
+            <div>
+                @Html.TextBoxFor(m => m.Address, new { @class = "single-input" })
+            </div>
+        </div>
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="mt-10">
+            @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.Email, new { @class = "single-input" })
+            </div>
+        </div>
+        <div class="mt-10">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            <div>
+                @Html.PasswordFor(m => m.Password, new { @class = "single-input" })
+            </div>
+        </div>
+        <div class="mt-10">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+            <div>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "single-input" })
+            </div>
+        </div>
+
+        <div class="button-group-area mt-40">
+            <input class="genric-btn primary circle" type="submit" value="Register" />
+            <input class="genric-btn success circle" type="reset" value="Clear" />
+        </div>
+    }
+</div>*@
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 
+@*<script type="text/javascript">
+    function chooseForm() {
+        $("#selectForm").on("change", function () {
+            console.log();
+            if ($("#selectForm").val() == "User") {
+                $('#userForm').show();
+
+            } else if ($("#selectForm").val() == "Company") {
+                $('#companyForm').show();
+
+            }
+        });
+    }
+
+</script>*@
