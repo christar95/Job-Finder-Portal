@@ -166,13 +166,13 @@ namespace GroupProjectCB16.Controllers
                 var userManager = new UserManager<ApplicationUser>(userStore);
 
                 userManager.AddToRole(user.Id, model.Role);
-                if (model.Role=="Company")
-                {
-                    ApplicationContext db = new ApplicationContext();
-                    Company company = new Company() { Name = model.Name, Address = model.Address, Email = model.Email, Phone = model.Phone, DateFounded = model.BirthDate };
-                    db.Companies.Add(company);
-                    db.SaveChanges();
-                }
+                //if (model.Role=="Company")
+                //{
+                //    ApplicationContext db = new ApplicationContext();
+                //    Company company = new Company() { Name = model.Name, Address = model.Address, Email = model.Email, Phone = model.Phone, DateFounded = model.BirthDate };
+                //    db.Companies.Add(company);
+                //    db.SaveChanges();
+                //}
                 if (result.Succeeded)
                 {
 

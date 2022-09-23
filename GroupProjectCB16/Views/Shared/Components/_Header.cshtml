@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNet.Identity.EntityFramework
-@using Entities
 @using GroupProjectCB16.Models
 @using Microsoft.AspNet.Identity
 
@@ -28,7 +27,7 @@
                                             <ul id="navigation">
                                                 <li>@Html.ActionLink("My Profile", "DetailsOf","Company") </li>
                                                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                                                <li>@Html.ActionLink("Find a Job", "GetAllJobs", "Job")</li>
+                                                <li>@Html.ActionLink("Job Ads", "Index", "Job")</li>
                                                 <li>@Html.ActionLink("About", "About", "Home")</li>
                                                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                                             </ul>

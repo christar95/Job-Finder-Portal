@@ -14,8 +14,6 @@ namespace DataAccessLayer
         {
 
         }
-        public virtual DbSet<Company> Companies { get; set; }
-        public virtual DbSet<Job> Jobs { get; set; }
-        public virtual DbSet<JobSeeker> JobSeekers { get; set; }
+        
     }
 }

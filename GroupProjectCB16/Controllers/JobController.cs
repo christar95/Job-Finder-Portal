@@ -1,148 +1,130 @@
-﻿using Entities.Models;
-using GroupProjectCB16.Controllers.ControllerHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using GroupProjectCB16.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GroupProjectCB16.Controllers
 {
-    public class JobController : BaseController
-    {        // GET: Job        public ActionResult Index()        {            return View();        }
+    public class JobController : Controller
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-        //Company creates Ad
-        [Authorize(Roles ="Company")]        
-        public ActionResult CreateJobAd()        
-        {            
-            return View();        
-        }
-
-        [HttpPost] 
-        public ActionResult CreateJobAd(Job job) 
-        { 
-            if (ModelState.IsValid) 
-            { 
-                UnitOfWork.Jobs.Insert(job);
-                return Redirect("/Home/Index");
-            } 
-            return View(job); 
-        }
-
-        [HttpGet] 
-        public ActionResult ReadAd(int? id) 
-        { 
-            if (id is null) 
-            { 
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest); 
-            } 
-            var jobAdFromCompany = UnitOfWork.Companies.GetById(id); 
-            if (jobAdFromCompany is null) 
-            { 
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound); 
-            } 
-            return View(jobAdFromCompany); 
-        }
-
-        //For AnonymousUsers        
-        [HttpGet]        
-        public ActionResult GetAllJobAds()        
-        {            
-            var companyJobs = UnitOfWork.Jobs.GetAll().ToList();
-            GetCompanies();
-            return View(companyJobs);
-        }
-
-        [HttpGet]
-        public ActionResult AdDetails(int? id)
+        // GET: Job
+        public ActionResult Index()
         {
-            if (id is null)
+            return View(db.Jobs.ToList());
+        }
+
+        // GET: Job/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
             {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var job = UnitOfWork.Jobs.GetById(id);
-            if (job is null)
+            Job job = db.Jobs.Find(id);
+            if (job == null)
             {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
+                return HttpNotFound();
             }
-            GetCompanies();
             return View(job);
         }
 
-        [HttpGet]
-        public ActionResult UpdateAd(int? id) 
-        { 
-            if (id is null) 
-            { 
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest); 
-            }
-            var AdForUpdate = UnitOfWork.Jobs.GetById(id);
-            
-            if (AdForUpdate is null) 
-            { 
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound); 
-            } 
-            return View(AdForUpdate); 
+        // GET: Job/Create
+        [Authorize(Roles = "Company")]
+        public ActionResult Create(ApplicationUser user)
+        {
+            Session["Id"] = user.Id;
+            return View();
         }
 
+        // POST: Job/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateAd(Job jobUpdated)
+        public ActionResult Create([Bind(Include = "Id,Title,Specialty,Description,WorkPlace,Region,EmploymentType,DatePosted,Salary,User_Id")] Job job)
         {
-        if (ModelState.IsValid) { UnitOfWork.Jobs.Update(jobUpdated); return RedirectToAction("GetAllJobAds"); }
-
-            return View(jobUpdated);
-        }
-
-        
-        /*public ActionResult Delete(int? id) 
-        { 
-            if (id is null)
-            { 
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest); 
-            } 
-            var AdForDelete = UnitOfWork.Jobs.GetById(id); 
-            if (AdForDelete is null) 
-            { 
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound); 
-            } 
-            return View(AdForDelete); 
-        }*/
-
-        /*[HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]*/
-        [HttpPost]
-        public ActionResult Delete(int? id)
-        {
-            /*if (id is null)
-            {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-            }
-            var AdForDelete = UnitOfWork.Jobs.GetById(id);
-            if (AdForDelete is null)
-            {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
-            }*/
-
-
             if (ModelState.IsValid)
             {
-                UnitOfWork.Jobs.Delete(id);
-                return RedirectToAction("GetAllJobAds");
+                    db.Jobs.Add(job);
+                    db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            
-            return RedirectToAction("GetAllJobAds");
+            return View(job);
         }
 
-        [NonAction]
-        public void GetCompanies()
+        // GET: Job/Edit/5
+        public ActionResult Edit(int? id)
         {
-            var companies = UnitOfWork.Companies.GetAll();
-            ViewBag.companies = companies;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+            return View(job);
         }
 
+        // POST: Job/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Title,Specialty,Description,WorkPlace,Region,EmploymentType,DatePosted,Salary")] Job job)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(job).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(job);
+        }
+
+        // GET: Job/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+            return View(job);
+        }
+
+        // POST: Job/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Job job = db.Jobs.Find(id);
+            db.Jobs.Remove(job);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
-    
 }
-
-

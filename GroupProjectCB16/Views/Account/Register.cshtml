@@ -8,22 +8,22 @@
 
 
 
-<div class="col-lg-8 col-md-8 align-items-center container mb-10 mt-10">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+<div class="col-lg-8  align-items-center container mb-10 mt-10">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {  role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
+        <h4>Create a new account</h4>
         <hr />
-        <span>Register as :</span>
-        <div class="mt-10">
-            <select name="Role" required>
+        <span class="mb-10">Register as :</span>
+        <div >
+            <select class="mt-10 select-Categories single-input" name="Role" required>
                 <option value="User">User</option>
                 <option value="Company">Company</option>
                 <option value="Admin">Admin</option>
             </select>
         </div>
         <div class="mt-10">
-            @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+            @Html.LabelFor(m => m.Name, new { @class = "control-label mt-10" })
             <div>
                 @Html.TextBoxFor(m => m.Name, new { @class = "single-input" })
             </div>

@@ -1,5 +1,6 @@
 ﻿using Entities.Models;
 using GroupProjectCB16.Controllers.ControllerHelper;
+using GroupProjectCB16.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,12 @@ using System.Web.Mvc;
 namespace GroupProjectCB16.Controllers
 {
     [Authorize(Roles = "Company")]
-    public class CompanyController : BaseController
+    public class CompanyController : Controller
     {
         // GET: Job
-       
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        
 
         [HttpGet]
         public ActionResult DetailsOf(int? id)
@@ -21,12 +24,12 @@ namespace GroupProjectCB16.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            var company = UnitOfWork.Companies.GetById(id);
-            if (company is null)
+            var user = db.Users.Find(id);
+            if (user is null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
             }
-            return View(company);
+            return View(user);
         }
 
         [HttpGet]
@@ -36,30 +39,32 @@ namespace GroupProjectCB16.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            var company = UnitOfWork.Companies.GetById(id);
-            if(company is null)
+            var user = db.Users.Find(id);
+            if(user is null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
             }
-            return View(company);
+            return View(user);
         }
 
         [HttpPut]
-        public ActionResult UpdateDetailsOfCompany(Company company)
+        public ActionResult UpdateDetailsOfCompany(ApplicationUser user)
         {
             if (ModelState.IsValid)
             {
-                UnitOfWork.Companies.Update(company);
+                db.Users.Attach(user);
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
                 return Redirect("/Home/Index");
             }
 
-            return View(company);
+            return View(user);
         }
 
         //Methods For Admin
         public ActionResult GetAllCompanies()
         {
-            var listOfCompanies = UnitOfWork.Companies.GetAll().ToList();
+            var listOfCompanies = db.Users.ToList();
 
             return Json(listOfCompanies,JsonRequestBehavior.AllowGet);
         }
@@ -76,14 +81,17 @@ namespace GroupProjectCB16.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            var company = UnitOfWork.Companies.GetById(id);
-            if (company is null)
+            var user = db.Users.Find(id);
+            if (user is null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
             }
             if (ModelState.IsValid)
             {
-                UnitOfWork.Companies.Delete(company);
+                db.Users.Attach(user);
+                db.Entry(user).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+                return Redirect("/Home/Index");
             }
             return RedirectToAction("Index");
         }

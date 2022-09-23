@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Entities.Enums;
+using Entities.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -11,6 +12,7 @@ namespace GroupProjectCB16.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime BirthDate { get; set; }
@@ -32,7 +34,7 @@ namespace GroupProjectCB16.Models
             : base("Connect", throwIfV1Schema: false)
         {
         }
-
+        public virtual DbSet<Job> Jobs { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
