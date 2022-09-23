@@ -8,7 +8,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2 class="text-center">New Job Ad</h2>
 
 
     
@@ -17,8 +17,8 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>Job</h4>
+        <div class="form-horizontal align-items-center">
+            
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
@@ -79,7 +79,7 @@
                 </div>
             </div>
 
-            <input type="hidden" name="User_Id" id="User_Id" value="@User.Identity.GetUserId()" />
+            <input type="hidden" name="User_Id" id="User_Id" value="@ViewBag.user.Id" />
             <input type="hidden" name="DatePosted" value="@DateTime.Now" />
 
 

@@ -22,7 +22,7 @@ namespace GroupProjectCB16
             ConfigureAuth(app);
             var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
             ConfigureServices(services);
-            CreateRolesAndUsers();
+            //CreateRolesAndUsers();
 
             //This is a default dependency resolver to resolve/get registered services
             var resolver = new DefaultDependencyResolver(services.BuildServiceProvider());
@@ -41,30 +41,30 @@ namespace GroupProjectCB16
             services.AddTransient<IJobService, JobService>();
         }
 
-        private void CreateRolesAndUsers()
-        {
-            ApplicationDbContext context = new ApplicationDbContext();
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            if (!roleManager.RoleExists("User"))
-            {
-                var role = new IdentityRole();
-                role.Name = "User";
-                roleManager.Create(role);
-            }
-            if (!roleManager.RoleExists("Company"))
-            {
-                var role = new IdentityRole();
-                role.Name = "Company";
-                roleManager.Create(role);
-            }
-            if (!roleManager.RoleExists("Admin"))
-            {
-                var role = new IdentityRole();
-                role.Name = "Admin";
-                roleManager.Create(role);
-            }
-        }
+        //private void CreateRolesAndUsers()
+        //{
+        //    ApplicationDbContext context = new ApplicationDbContext();
+        //    var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+        //    var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+        //    if (!roleManager.RoleExists("User"))
+        //    {
+        //        var role = new IdentityRole();
+        //        role.Name = "User";
+        //        roleManager.Create(role);
+        //    }
+        //    if (!roleManager.RoleExists("Company"))
+        //    {
+        //        var role = new IdentityRole();
+        //        role.Name = "Company";
+        //        roleManager.Create(role);
+        //    }
+        //    if (!roleManager.RoleExists("Admin"))
+        //    {
+        //        var role = new IdentityRole();
+        //        role.Name = "Admin";
+        //        roleManager.Create(role);
+        //    }
+        //}
 
     }
 }

@@ -154,25 +154,31 @@ namespace GroupProjectCB16.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+
+
+                
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
                     Name = model.Name, Surname = model.Surname, Address = model.Address, 
                     BirthDate = model.BirthDate, Gender=model.Gender, PhoneNumber = model.Phone 
                 };
-
+                
+                if (model.Role == "Company")
+                {
+                    
+                    CompanyDetails company = new CompanyDetails() { Name = model.Name, Email = model.Email };
+                    context.Companies.Add(company);
+                    context.Entry(company).State = System.Data.Entity.EntityState.Added;
+                    context.SaveChanges();
+                }
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var roleStore = new RoleStore<IdentityRole>(context);
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
-
+                
                 userManager.AddToRole(user.Id, model.Role);
-                //if (model.Role=="Company")
-                //{
-                //    ApplicationContext db = new ApplicationContext();
-                //    Company company = new Company() { Name = model.Name, Address = model.Address, Email = model.Email, Phone = model.Phone, DateFounded = model.BirthDate };
-                //    db.Companies.Add(company);
-                //    db.SaveChanges();
-                //}
+                
                 if (result.Succeeded)
                 {
 

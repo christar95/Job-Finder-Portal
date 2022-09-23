@@ -19,7 +19,7 @@
         protected override void Seed(GroupProjectCB16.Models.ApplicationDbContext context)
         {
             #region ApplicationUserSeeding
-            
+
             //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             //var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             //if (!roleManager.RoleExists("User"))
@@ -44,7 +44,7 @@
 
             //if (!context.Users.Any(x=>x.UserName== "infoath@epsilonnet.gr"))
             //{
-                
+
             //    var store = new UserStore<ApplicationUser>(context);
             //    var manager = new UserManager<ApplicationUser>(store);
             //    ApplicationUser c1 = new ApplicationUser()
@@ -141,7 +141,7 @@
             //    manager.Create(c7);
             //    manager.AddToRole(c7.Id, "Company");
             //}
-               
+
             //context.SaveChanges();
 
             //Job j1 = new Job() { Title = "Junior .NET Developer", Specialty = "Developer", Description = "We are looking for a junior developer with knowledge of .NET CORE", Region = "Athens", DatePosted = new DateTime(2022, 08, 09), EmploymentType = EmploymentType.FullTime, WorkPlace = WorkPlace.OnSite, Salary = 900 };
@@ -215,13 +215,31 @@
             //};
             //context.Jobs.AddOrUpdate(x => x.Title, j1, j2, j3, j4, j5, j6, j7, j8, j9, j10);
             //context.SaveChanges();
-            
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            if (!roleManager.RoleExists("User"))
+            {
+                var role = new IdentityRole();
+                role.Name = "User";
+                roleManager.Create(role);
+            }
+            if (!roleManager.RoleExists("Company"))
+            {
+                var role = new IdentityRole();
+                role.Name = "Company";
+                roleManager.Create(role);
+            }
+            if (!roleManager.RoleExists("Admin"))
+            {
+                var role = new IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+            }
 
 
+                #endregion
 
-
-            #endregion
-
-        }
+            }
     }
 }

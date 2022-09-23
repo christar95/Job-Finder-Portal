@@ -19,7 +19,7 @@ namespace GroupProjectCB16.Models
         public decimal? Salary { get; set; }
 
         //Navigation Properties
-        public ApplicationUser User { get; set; }
+        public CompanyDetails Company { get; set; }
 
         
 

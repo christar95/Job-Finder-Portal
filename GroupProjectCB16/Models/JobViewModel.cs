@@ -19,7 +19,7 @@ namespace GroupProjectCB16.Models
         public decimal? Salary { get; set; }
 
         
-        public string UserId { get; set; }
+        public string CompanyDetailsId { get; set; }
 
 
     }

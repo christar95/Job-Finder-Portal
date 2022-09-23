@@ -5,79 +5,77 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Job</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Specialty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Specialty)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WorkPlace)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WorkPlace)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Region)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Region)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EmploymentType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmploymentType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DatePosted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DatePosted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Salary)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Salary)
-        </dd>
-
-    </dl>
+<!-- Hero Area Start-->
+<div class="slider-area ">
+    <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="/Assets/img/hero/about.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap text-center">
+                        <h2>Job Details</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<!-- Hero Area End -->
+<!-- job post company Start -->
+<div class="job-post-company pt-120 pb-120">
+    <div class="container">
+        <div class="row justify-content-between">
+            <!-- Left Content -->
+            <div class="col-xl-7 col-lg-8">
+                <!-- job single -->
+                <div class="single-job-items mb-50">
+                    <div class="job-items">
+                        <div class="company-img company-img-details">
+                            <a href="#"><img src="assets/img/icon/job-list1.png" alt=""></a>
+                        </div>
+                        <div class="job-tittle">
+                            <a href="#">
+                                <h4>@Model.Title</h4>
+                            </a>
+                            <ul>
+                                <li>@Model.Specialty</li>
+                                <li><i class="fas fa-map-marker-alt"></i>@Model.WorkPlace</li>
+                                <li>@Model.Salary €/Month</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- job single End -->
+                <div class="job-post-details">
+                    <div class="post-details1 mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Job Description</h4>
+                        </div>
+                        <p>@Model.Description</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Content -->
+            <div class="col-xl-4 col-lg-4">
+                <div class="post-details3  mb-50">
+                    <!-- Small Section Tittle -->
+                    <div class="small-section-tittle">
+                        <h4>Job Overview</h4>
+                    </div>
+                    <ul>
+                        <li>Posted date : <span>@Model.DatePosted.ToShortDateString()</span></li>
+                        <li>Location : <span>@Model.Region</span></li>
+                        <li>Job nature : <span>@Model.EmploymentType</span></li>
+                        <li>Salary :  <span>@Model.Salary €/Month</span></li>
+                    </ul>
+                    <div >
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id },new { @class = "btn apply-btn2" })
+                    </div>
+                </div>
+            </div>
+            <p>@Html.ActionLink("Back to List", "Index",null,new { @class = "btn apply-btn2" })</p>
+        </div>
+    </div>
+</div>
+<!-- job post company End -->
