@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -18,7 +19,12 @@ namespace GroupProjectCB16.Models
         public DateTime BirthDate { get; set; }
         public string Address { get; set; }
         public Gender Gender { get; set; }
-        
+        public ICollection<Job> Jobs { get; set; }
+        public ApplicationUser()
+        {
+            Jobs = new HashSet<Job>();
+        }
+        public string Photo { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

@@ -18,29 +18,31 @@ namespace GroupProjectCB16.Controllers
         
 
         [HttpGet]
-        public ActionResult DetailsOf(int? id)
+        public ActionResult DetailsOf(string id)
         {
             if (id is null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             var user = db.Users.Find(id);
+            var company = db.Companies.FirstOrDefault(c => c.User.Id == id);
             if (user is null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
             }
-            return View(user);
+            return View(company);
         }
 
         [HttpGet]
-        public ActionResult UpdateDetailsOfCompany(int? id)
+        public ActionResult UpdateDetailsOfCompany(string id)
         {
             if(id is null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             var user = db.Users.Find(id);
-            if(user is null)
+            var company = db.Companies.FirstOrDefault(c => c.User.Id == id);
+            if (user is null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
             }

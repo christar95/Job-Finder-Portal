@@ -3,7 +3,7 @@
 <head>
 
     @Html.Partial("~/Views/Shared/Components/_MetaHeader.cshtml")
-
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
 
@@ -26,6 +26,9 @@
     <!-- Footer End-->
     <!-- JS here -->
     @Html.Partial("~/Views/Shared/Components/_JsLibraries.cshtml")
+    
+    @Scripts.Render("~/bundles/jquery")
+    
     @RenderSection("scripts", required: false)
 </body>
 </html>

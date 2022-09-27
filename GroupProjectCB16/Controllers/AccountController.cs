@@ -150,7 +150,7 @@ namespace GroupProjectCB16.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase photo)
         {
             if (ModelState.IsValid)
             {
@@ -162,21 +162,26 @@ namespace GroupProjectCB16.Controllers
                     Name = model.Name, Surname = model.Surname, Address = model.Address, 
                     BirthDate = model.BirthDate, Gender=model.Gender, PhoneNumber = model.Phone 
                 };
-                
-                if (model.Role == "Company")
+
+                if (photo != null)
                 {
-                    
-                    CompanyDetails company = new CompanyDetails() { Name = model.Name, Email = model.Email };
-                    context.Companies.Add(company);
-                    context.Entry(company).State = System.Data.Entity.EntityState.Added;
-                    context.SaveChanges();
+                    photo.SaveAs(Server.MapPath("~/Content/CVs/" + photo.FileName));
+                    user.Photo = photo.FileName;
                 }
-                var result = await UserManager.CreateAsync(user, model.Password);
+
                 var roleStore = new RoleStore<IdentityRole>(context);
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
-                
+                var result = await userManager.CreateAsync(user, model.Password);
+                if (model.Role == "Company")
+                {
+
+                    CompanyDetails company = new CompanyDetails() { Name = model.Name, Email = model.Email,DateFounded=model.BirthDate,Address=model.Address ,User=user};
+                    context.Companies.Add(company);
+                    context.Entry(company).State = System.Data.Entity.EntityState.Added;
+                    context.SaveChanges();
+                }
                 userManager.AddToRole(user.Id, model.Role);
                 
                 if (result.Succeeded)

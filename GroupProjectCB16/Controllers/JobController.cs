@@ -19,6 +19,14 @@ namespace GroupProjectCB16.Controllers
         // GET: Job
         public ActionResult Index()
         {
+            if (Request.IsAuthenticated)
+            {
+                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var currentUser = manager.FindById(User.Identity.GetUserId());
+                ViewBag.userId = currentUser.Id;
+            }
+            GetAllCompanies();
+            GetAllUsers();
             return View(db.Jobs.ToList());
         }
 
@@ -39,9 +47,9 @@ namespace GroupProjectCB16.Controllers
 
         // GET: Job/Create
         [Authorize(Roles = "Company")]
-        public ActionResult Create(ApplicationUser user)
+        public ActionResult Create()
         {
-            ViewBag.user = user;
+           
             return View();
         }
 
@@ -54,8 +62,13 @@ namespace GroupProjectCB16.Controllers
         {
             if (ModelState.IsValid)
             {
-                    db.Jobs.Add(job);
-                    db.SaveChanges();
+                
+                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var currentUser = manager.FindById(User.Identity.GetUserId());
+                var company = db.Companies.FirstOrDefault(c => c.User.Id == currentUser.Id);
+                db.Jobs.Add(job);
+                job.Company = company;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(job);
@@ -128,5 +141,18 @@ namespace GroupProjectCB16.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public void GetAllCompanies()
+        {
+            var companies = db.Companies.ToList();
+            ViewBag.companies = companies;
+        }
+
+        public void GetAllUsers()
+        {
+            var users = db.Users.ToList();
+            ViewBag.users = users;
+        }
+
     }
 }

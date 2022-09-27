@@ -1,4 +1,4 @@
-﻿@model GroupProjectCB16.Models.ApplicationUser
+﻿@model GroupProjectCB16.Models.CompanyDetails
 
 @{
     ViewBag.Title = "DetailsOf";
@@ -35,25 +35,11 @@
             @Html.DisplayFor(model => model.Address)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.b)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateFounded)
-        </dd>
+       
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) *@
     @Html.ActionLink("Back to List", "Index")
 </p>
