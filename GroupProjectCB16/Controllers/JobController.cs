@@ -38,10 +38,18 @@ namespace GroupProjectCB16.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Job job = db.Jobs.Find(id);
+            if (Request.IsAuthenticated)
+            {
+                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                var currentUser = manager.FindById(User.Identity.GetUserId());
+                ViewBag.user = currentUser;
+            }
             if (job == null)
             {
                 return HttpNotFound();
             }
+            GetAllCompanies();
+            GetAllUsers();
             return View(job);
         }
 
@@ -152,6 +160,17 @@ namespace GroupProjectCB16.Controllers
         {
             var users = db.Users.ToList();
             ViewBag.users = users;
+        }
+
+        [Authorize(Roles ="User")]
+        [HttpPost]
+        public ActionResult Apply(int id,string userId)
+        {
+            var job = db.Jobs.Find(id);
+            var user = db.Users.Find(userId);
+            user.Jobs.Add(job);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = id });
         }
 
     }

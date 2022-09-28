@@ -46,21 +46,21 @@ namespace GroupProjectCB16.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
             }
-            return View(user);
+            return View(company);
         }
 
         [HttpPut]
-        public ActionResult UpdateDetailsOfCompany(ApplicationUser user)
+        public ActionResult UpdateDetailsOfCompany(CompanyDetails company)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Attach(user);
-                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.Companies.Attach(company);
+                db.Entry(company).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return Redirect("/Home/Index");
             }
 
-            return View(user);
+            return View(company);
         }
 
         //Methods For Admin

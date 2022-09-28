@@ -1,4 +1,5 @@
 ﻿@model GroupProjectCB16.Models.Job
+@using GroupProjectCB16.Models
 
 @{
     ViewBag.Title = "Details";
@@ -69,12 +70,35 @@
                         <li>Job nature : <span>@Model.EmploymentType</span></li>
                         <li>Salary :  <span>@Model.Salary €/Month</span></li>
                     </ul>
-                    <div >
-                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id },new { @class = "btn apply-btn2" })
+                    <div>
+                        @if (Request.IsAuthenticated)
+                        {
+                            if (ViewBag.user.Id == Model.Company.User.Id)
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn apply-btn2" })
+                            }
+                            else if (User.IsInRole("User"))
+                            {
+                                if (ViewBag.user.Jobs.Contains(Model))
+                                {
+                                    <p>You have already applied for this job</p>
+                                }
+                                else
+                                {
+                                    <form action="/job/apply" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@Model.Id" />
+                                        <input type="hidden" name="userId" value="@ViewBag.user.Id" />
+                                        <input type="submit" class="btn apply-btn2" value="Apply" />
+                                    </form>
+                                }
+
+                            }
+                        }
                     </div>
                 </div>
             </div>
-            <p>@Html.ActionLink("Back to List", "Index",null,new { @class = "btn apply-btn2" })</p>
+            <p>@Html.ActionLink("Back to List", "Index", null, new { @class = "btn apply-btn2" })</p>
         </div>
     </div>
 </div>

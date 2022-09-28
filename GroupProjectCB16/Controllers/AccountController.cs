@@ -12,6 +12,7 @@ using GroupProjectCB16.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DataAccessLayer;
 using Entities.Models;
+using System.Collections.Generic;
 
 namespace GroupProjectCB16.Controllers
 {

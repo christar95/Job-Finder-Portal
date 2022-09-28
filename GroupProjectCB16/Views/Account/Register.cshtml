@@ -9,7 +9,7 @@
 
 
 <div class="col-lg-8  align-items-center container mb-10 mt-10">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form", id = "form" , enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form", id = "form", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <h4>Create a new account</h4>
@@ -59,6 +59,13 @@
             </div>
         </div>
 
+        <div class="mt-10">
+            @Html.LabelFor(m => m.Phone, new { @class = "control-label" })
+            <div>
+                @Html.TextBoxFor(m => m.Phone, new { @class = "single-input" })
+            </div>
+        </div>
+
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="mt-10">
             @Html.LabelFor(m => m.Email, new { @class = "control-label" })
@@ -104,13 +111,13 @@
             document.getElementById("surnameForm").style.display = "none";
             document.getElementById('dateLabel').innerHTML = "Date Founded";
             document.getElementById("genderForm").style.display = "none";
-            document.getElementById('dateLabel').innerHTML = "Company Logo";
+            document.getElementById('photoLabel').innerHTML = "Company Logo";
         }
         else {
             document.getElementById("surnameForm").style.display = "";
             document.getElementById('dateLabel').innerHTML = "Date of birth";
             document.getElementById("genderForm").style.display = "";
-            document.getElementById('dateLabel').innerHTML = "Upload CV";
+            document.getElementById('photoLabel').innerHTML = "Upload CV";
         }
     }
 </script>
