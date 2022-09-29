@@ -79,13 +79,13 @@
                             }
                             else if (User.IsInRole("User"))
                             {
-                                if (ViewBag.user.Jobs.Contains(Model))
+                                if (ViewBag.jobs.Contains(Model))
                                 {
                                     <p>You have already applied for this job</p>
                                 }
                                 else
                                 {
-                                    <form action="/job/apply" method="post">
+                                    <form action="/Job/Apply" method="post">
                                         @Html.AntiForgeryToken()
                                         <input type="hidden" name="id" value="@Model.Id" />
                                         <input type="hidden" name="userId" value="@ViewBag.user.Id" />

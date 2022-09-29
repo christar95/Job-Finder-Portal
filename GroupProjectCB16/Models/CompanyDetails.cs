@@ -12,6 +12,7 @@ namespace GroupProjectCB16.Models
         public string Email { get; set; }
         public DateTime DateFounded { get; set; }
         public string Address { get; set; }
+        public string Photo { get; set; }
         public ApplicationUser User { get; set; }
         
     }

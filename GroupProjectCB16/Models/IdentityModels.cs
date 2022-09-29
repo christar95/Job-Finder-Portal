@@ -25,6 +25,7 @@ namespace GroupProjectCB16.Models
             Jobs = new HashSet<Job>();
         }
         public string Photo { get; set; }
+        public string Cv { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -48,6 +49,6 @@ namespace GroupProjectCB16.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<GroupProjectCB16.Models.JobViewModel> JobViewModels { get; set; }
+        
     }
 }

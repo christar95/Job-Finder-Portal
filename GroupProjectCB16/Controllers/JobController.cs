@@ -43,6 +43,7 @@ namespace GroupProjectCB16.Controllers
                 var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
                 var currentUser = manager.FindById(User.Identity.GetUserId());
                 ViewBag.user = currentUser;
+                ViewBag.userJobs = currentUser.Jobs;
             }
             if (job == null)
             {
@@ -50,6 +51,7 @@ namespace GroupProjectCB16.Controllers
             }
             GetAllCompanies();
             GetAllUsers();
+            GetAllJobs();
             return View(job);
         }
 
@@ -141,6 +143,23 @@ namespace GroupProjectCB16.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Apply(int id, string userId)
+        {
+            if (Request.IsAuthenticated)
+            {
+                var job = db.Jobs.Find(id);
+                var user = db.Users.Find(userId);
+                user.Jobs.Add(job);
+                db.Entry(job).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = id });
+            }
+            return RedirectToAction("Details", new { id = id });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -150,27 +169,25 @@ namespace GroupProjectCB16.Controllers
             base.Dispose(disposing);
         }
 
+        [NonAction]
         public void GetAllCompanies()
         {
             var companies = db.Companies.ToList();
             ViewBag.companies = companies;
         }
 
+        [NonAction]
         public void GetAllUsers()
         {
             var users = db.Users.ToList();
             ViewBag.users = users;
         }
 
-        [Authorize(Roles ="User")]
-        [HttpPost]
-        public ActionResult Apply(int id,string userId)
+       [NonAction]
+       public void GetAllJobs()
         {
-            var job = db.Jobs.Find(id);
-            var user = db.Users.Find(userId);
-            user.Jobs.Add(job);
-            db.SaveChanges();
-            return RedirectToAction("Details", new { id = id });
+            var jobs = db.Jobs.ToList();
+            ViewBag.jobs = jobs;
         }
 
     }

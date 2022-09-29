@@ -86,12 +86,17 @@
             </div>
         </div>
         <div class="mt-10">
-            <label class="control-label" for="photo" id="photoLabel">Upload CV</label>
+            <label class="control-label" for="photo" id="photoLabel">Upload Profile Picture</label>
             <div>
                 <input type="file" name="photo" id="photo" />
             </div>
         </div>
-
+        <div class="mt-10" id="uploadCv">
+            <label class="control-label" for="cv" id="cvLabel">Upload CV</label>
+            <div>
+                <input type="file" name="cv" id="cv" />
+            </div>
+        </div>
         <div class="button-group-area mt-40">
             <input class="genric-btn primary circle" type="submit" value="Register" />
             <input class="genric-btn success circle" type="reset" value="Clear" />
@@ -112,12 +117,12 @@
             document.getElementById('dateLabel').innerHTML = "Date Founded";
             document.getElementById("genderForm").style.display = "none";
             document.getElementById('photoLabel').innerHTML = "Company Logo";
+            document.getElementById("uploadCv").style.display = "none";
         }
         else {
             document.getElementById("surnameForm").style.display = "";
             document.getElementById('dateLabel').innerHTML = "Date of birth";
             document.getElementById("genderForm").style.display = "";
-            document.getElementById('photoLabel').innerHTML = "Upload CV";
         }
     }
 </script>

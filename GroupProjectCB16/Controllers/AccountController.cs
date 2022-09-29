@@ -151,7 +151,7 @@ namespace GroupProjectCB16.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase photo)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase photo, HttpPostedFileBase cv)
         {
             if (ModelState.IsValid)
             {
@@ -164,21 +164,34 @@ namespace GroupProjectCB16.Controllers
                     BirthDate = model.BirthDate, Gender=model.Gender, PhoneNumber = model.Phone 
                 };
 
-                if (photo != null)
-                {
-                    photo.SaveAs(Server.MapPath("~/Content/CVs/" + photo.FileName));
-                    user.Photo = photo.FileName;
-                }
-
+               
                 var roleStore = new RoleStore<IdentityRole>(context);
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 var result = await userManager.CreateAsync(user, model.Password);
+                if (model.Role=="User")
+                {
+                    if (photo != null)
+                    {
+                        photo.SaveAs(Server.MapPath("~/Content/Photos/" + photo.FileName));
+                        user.Photo = photo.FileName;
+                    }
+                    if (cv != null)
+                    {
+                        photo.SaveAs(Server.MapPath("~/Content/CVs/" + photo.FileName));
+                        user.Cv = cv.FileName;
+                    }
+                }
                 if (model.Role == "Company")
                 {
-
+                    
                     CompanyDetails company = new CompanyDetails() { Name = model.Name, Email = model.Email,DateFounded=model.BirthDate,Address=model.Address ,User=user};
+                    if (photo != null)
+                    {
+                        photo.SaveAs(Server.MapPath("~/Content/Photos/" + photo.FileName));
+                        company.Photo = photo.FileName;
+                    }
                     context.Companies.Add(company);
                     context.Entry(company).State = System.Data.Entity.EntityState.Added;
                     context.SaveChanges();

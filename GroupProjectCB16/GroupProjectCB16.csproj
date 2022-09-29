@@ -196,7 +196,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\JobController.cs" />
-    <Compile Include="Controllers\JobViewModelsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DI\ServiceProviderExtensions.cs" />
     <Compile Include="DI\DefaultDependencyResolver.cs" />
@@ -208,9 +207,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CompanyDetails.cs" />
+    <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Job.cs" />
-    <Compile Include="Models\JobViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -519,11 +518,6 @@
     <Content Include="Views\Job\Index.cshtml" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
-    <Content Include="Views\JobViewModels\Create.cshtml" />
-    <Content Include="Views\JobViewModels\Delete.cshtml" />
-    <Content Include="Views\JobViewModels\Details.cshtml" />
-    <Content Include="Views\JobViewModels\Edit.cshtml" />
-    <Content Include="Views\JobViewModels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
