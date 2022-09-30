@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using GroupProjectCB16.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Entities.Enums;
 
 namespace GroupProjectCB16.Controllers
 {
@@ -17,7 +18,7 @@ namespace GroupProjectCB16.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Job
-        public ActionResult Index()
+        public ActionResult Index(int? companyId,bool? fullTime,bool? partTime,string workPlace,bool? dateAsc,bool? dateDesc)
         {
             if (Request.IsAuthenticated)
             {
@@ -27,7 +28,41 @@ namespace GroupProjectCB16.Controllers
             }
             GetAllCompanies();
             GetAllUsers();
-            return View(db.Jobs.ToList());
+            var jobs = db.Jobs.Include(j => j.Company).ToList();
+            var filteredJobs = jobs;
+            if (companyId!=null)
+            {
+                filteredJobs = filteredJobs.Where(j => j.Company.Id == companyId).ToList();
+            }
+            if (fullTime==true)
+            {
+                filteredJobs = filteredJobs.Where(j => j.EmploymentType == EmploymentType.FullTime).ToList();
+            }
+            if (partTime==true)
+            {
+                filteredJobs = filteredJobs.Where(j => j.EmploymentType == EmploymentType.PartTime).ToList();
+            }
+            if (workPlace== "Hybrid")
+            {
+                filteredJobs = filteredJobs.Where(j => j.WorkPlace == WorkPlace.Hybrid).ToList();
+            }
+            else if (workPlace == "Remote")
+            {
+                filteredJobs = filteredJobs.Where(j => j.WorkPlace == WorkPlace.Remote).ToList();
+            }
+            else if (workPlace == "On Site")
+            {
+                filteredJobs = filteredJobs.Where(j => j.WorkPlace == WorkPlace.OnSite).ToList();
+            }
+            if (dateAsc==true)
+            {
+                filteredJobs = filteredJobs.OrderBy(j => j.DatePosted).ToList();
+            }
+            else if (dateDesc==true)
+            {
+                filteredJobs = filteredJobs.OrderByDescending(j => j.DatePosted).ToList();
+            }
+            return View(filteredJobs);
         }
 
         // GET: Job/Details/5
@@ -68,7 +103,7 @@ namespace GroupProjectCB16.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Specialty,Description,WorkPlace,Region,EmploymentType,DatePosted,Salary,User_Id")] Job job)
+        public ActionResult Create([Bind(Include = "Id,Title,Specialty,Description,WorkPlace,Region,EmploymentType,DatePosted,Salary")] Job job)
         {
             if (ModelState.IsValid)
             {
@@ -189,6 +224,8 @@ namespace GroupProjectCB16.Controllers
             var jobs = db.Jobs.ToList();
             ViewBag.jobs = jobs;
         }
+
+
 
     }
 }

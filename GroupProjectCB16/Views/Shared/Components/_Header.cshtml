@@ -39,7 +39,7 @@
                                     <div class="main-menu">
                                         <nav class="d-none d-lg-block">
                                             <ul id="navigation">
-                                                <li><a href="~/Content/CVs/@currentUser.Photo">My Profile</a></li>
+                                                <li>@Html.ActionLink("My Profile", "Details", "User", new { id = User.Identity.GetUserId() }, null)</li>
                                                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                                                 <li>@Html.ActionLink("Find a Job", "Index", "Job")</li>
                                                 <li>@Html.ActionLink("About", "About", "Home")</li>

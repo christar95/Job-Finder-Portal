@@ -49,78 +49,84 @@
                 </div>
                 <!-- Job Category Listing start -->
                 <div class="job-category-listing mb-50">
-                    <!-- single one -->
-                    <div class="single-listing">
-                        <div class="small-section-tittle2">
-                            <h4>Company</h4>
-                        </div>
-                        <!-- Select job items start -->
-                        <div class="select-job-items2">
-                            <select name="companyId" >
-                                <option value="">All</option>
-                                <option value="">Category 1</option>
-                                <option value="">Category 2</option>
-                                <option value="">Category 3</option>
-                                <option value="">Category 4</option>
-                            </select>
-                        </div>
-                        <!--  Select job items End-->
-                        <!-- select-Categories start -->
-                        <div class="select-Categories pt-80 pb-50">
+                    <form>
+                        <!-- single one -->
+                        <div class="single-listing">
                             <div class="small-section-tittle2">
-                                <h4>Job Type</h4>
+                                <h4>Company</h4>
                             </div>
-                            <label class="container">
-                                Full Time
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">
-                                Part Time
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
+                            <!-- Select job items start -->
+
+                            <div class="select-job-items2">
+                                <select name="companyId">
+                                    <option value="null">All</option>
+                                    @foreach (var company in ViewBag.companies)
+                                    {
+                                        <option value="@company.Id">@company.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <!--  Select job items End-->
+                            <!-- select-Categories start -->
+                            <div class="select-Categories pt-80 pb-50">
+                                <div class="small-section-tittle2">
+                                    <h4>Job Type</h4>
+                                </div>
+                                <label class="container">
+                                    Full Time
+                                    <input type="checkbox" name="fullTime" value="true" />
+                                    <input type="hidden" name="fullTime" value="false" />
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">
+                                    Part Time
+                                    <input type="checkbox" name="partTime" value="true" />
+                                    <input type="hidden" name="partTime" value="false" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <!-- select-Categories End -->
                         </div>
-                        <!-- select-Categories End -->
-                    </div>
-                    <!-- single two -->
-                    <div class="single-listing pb-80">
-                        <div class="small-section-tittle2">
-                            <h4>Job Location</h4>
-                        </div>
-                        <!-- Select job items start -->
-                        <div class="select-job-items2">
-                            <select name="select">
-                                <option value="">Anywhere</option>
-                                <option value="">Remote</option>
-                                <option value="">On Site</option>
-                            </select>
-                        </div>
-                        <!--  Select job items End-->
-                    </div>
-                    <!-- single three -->
-                    <div class="single-listing">
-                        <!-- select-Categories start -->
-                        <div class="select-Categories pb-50">
+                        <!-- single two -->
+                        <div class="single-listing pb-80">
                             <div class="small-section-tittle2">
-                                <h4>Date Posted</h4>
+                                <h4>Job Location</h4>
                             </div>
-                            <label class="container">
-                                Ascending
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">
-                                Descending
-                                <input type="checkbox" >
-                                <span class="checkmark"></span>
-                            </label>
+                            <!-- Select job items start -->
+                            <div class="select-job-items2">
+                                <select name="work">
+                                    <option value="">Anywhere</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                    <option value="Remote">Remote</option>
+                                    <option value="On Site">On Site</option>
+                                </select>
+                            </div>
+                            <!--  Select job items End-->
                         </div>
-                        <!-- select-Categories End -->
-                    </div>
-                    <div class="single-listing">
-                        
-                    </div>
+                        <!-- single three -->
+                        <div class="single-listing">
+                            <!-- select-Categories start -->
+                            <div class="select-Categories pb-50">
+                                <div class="small-section-tittle2">
+                                    <h4>Date Posted</h4>
+                                </div>
+                                <label class="container">
+                                    Ascending
+                                    <input type="checkbox" name="dateAsc" value="true" />
+                                    <input type="hidden" name="dateAsc" value="false" />
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">
+                                    Descending
+                                    <input type="checkbox" name="dateDesc" value="true" />
+                                    <input type="hidden" name="dateDesc" value="false" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <!-- select-Categories End -->
+                        </div>
+                        <input type="submit" value="Search"  class="genric-btn danger circle arrow"/>
+                    </form>
                 </div>
                 <!-- Job Category Listing End -->
             </div>
@@ -182,6 +188,6 @@
             </div>
         </div>
     </div>
-</div>
-        
+</div>       
 <!-- Job List Area End -->
+

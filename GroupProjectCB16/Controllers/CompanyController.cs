@@ -16,7 +16,7 @@ namespace GroupProjectCB16.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult DetailsOf(string id)
         {
@@ -34,18 +34,15 @@ namespace GroupProjectCB16.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateDetailsOfCompany(string id)
+        public ActionResult UpdateDetailsOfCompany(int? id)
         {
             if(id is null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            var user = db.Users.Find(id);
-            var company = db.Companies.FirstOrDefault(c => c.User.Id == id);
-            if (user is null)
-            {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
-            }
+            
+            var company = db.Companies.FirstOrDefault(c => c.Id == id);
+           
             return View(company);
         }
 

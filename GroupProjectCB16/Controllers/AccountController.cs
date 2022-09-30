@@ -170,7 +170,8 @@ namespace GroupProjectCB16.Controllers
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 var result = await userManager.CreateAsync(user, model.Password);
-                if (model.Role=="User")
+                userManager.AddToRole(user.Id, model.Role);
+                if (model.Role == "User")
                 {
                     if (photo != null)
                     {
@@ -179,14 +180,16 @@ namespace GroupProjectCB16.Controllers
                     }
                     if (cv != null)
                     {
-                        photo.SaveAs(Server.MapPath("~/Content/CVs/" + photo.FileName));
+                        cv.SaveAs(Server.MapPath("~/Content/CVs/" + cv.FileName));
                         user.Cv = cv.FileName;
                     }
+                    context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
                 }
                 if (model.Role == "Company")
                 {
-                    
-                    CompanyDetails company = new CompanyDetails() { Name = model.Name, Email = model.Email,DateFounded=model.BirthDate,Address=model.Address ,User=user};
+
+                    CompanyDetails company = new CompanyDetails() { Name = model.Name, Email = model.Email, DateFounded = model.BirthDate, Address = model.Address,Phone=model.Phone, User = user };
                     if (photo != null)
                     {
                         photo.SaveAs(Server.MapPath("~/Content/Photos/" + photo.FileName));
@@ -196,8 +199,6 @@ namespace GroupProjectCB16.Controllers
                     context.Entry(company).State = System.Data.Entity.EntityState.Added;
                     context.SaveChanges();
                 }
-                userManager.AddToRole(user.Id, model.Role);
-                
                 if (result.Succeeded)
                 {
 

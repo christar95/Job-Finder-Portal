@@ -1,45 +1,78 @@
 ﻿@model GroupProjectCB16.Models.CompanyDetails
+@using Microsoft.AspNet.Identity.EntityFramework
+@using GroupProjectCB16.Models
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "DetailsOf";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>DetailsOf</h2>
+<h2>My Profile</h2>
 
 <div>
-    <h4>Company</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(Model => Model.Name)
-        </dt>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="~/Content/Photos/@Model.Photo" alt="" class="img-fluid">
+                    </div>
+                    <div class="col-md-9 mt-sm-20">
+                        <p>
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Name)
+                                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Email)
+                                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Address)
+                                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Address)
+                                </dd>
 
-       
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Phone)
+                                </dt>
 
-    </dl>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Phone)
+                                </dd>
+
+                            </dl>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p>
+        @if (Request.IsAuthenticated)
+        {
+            var manager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>
+                    (new ApplicationDbContext()));
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            if (currentUser.Id == Model.User.Id)
+            {
+                @Html.ActionLink("Edit", "UpdateDetailsOfCompany", new { id = Model.Id }, new { @class = "genric-btn primary-border circle" })
+            }
+        }
+        @Html.ActionLink("Go Back", "Index", "Home", null, new { @class = "genric-btn success-border circle" })
+    </p>
 </div>
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) *@
-    @Html.ActionLink("Back to List", "Index")
-</p>
